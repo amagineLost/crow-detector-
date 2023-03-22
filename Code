@@ -1,0 +1,60 @@
+-- Replace this with your desired URL
+
+local URL = "https://raw.githubusercontent.com/CrowzScripts/AnimalSim/main/CrowOnTop"
+
+-- Connect a function to the HttpService's HttpEnabled property to make sure it's enabled
+
+game:GetService("HttpService").HttpEnabled = true
+
+-- Define a function to send the notification
+
+local function sendNotification(player, message)
+
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+
+        Title = "Executed Crow Script",
+
+        Text = message,
+
+        Icon = "rbxassetid://1234567890" -- Optional
+
+    })
+
+end
+
+-- Define a function to handle the request response
+
+local function handleResponse(response, player)
+
+    if response.Success then
+
+        -- Replace this with your desired notification message
+
+        local message = player.Name .. " executed the CrowOnTop script!"
+
+        sendNotification(player, message)
+
+    end
+
+end
+
+-- Connect a function to the HttpService's RequestReceived signal to handle URL requests
+
+game:GetService("HttpService").RequestReceived:Connect(function(request, response)
+
+    -- Replace this with your desired URL path
+
+    if request.Path == "/main/CrowOnTop" then
+
+        local player = game.Players:GetPlayerFromUserId(request.UserId)
+
+        if player then
+
+            handleResponse(response, player)
+
+        end
+
+    end
+
+end)
+
